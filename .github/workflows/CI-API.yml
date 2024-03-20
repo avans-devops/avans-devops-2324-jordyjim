@@ -23,15 +23,15 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ././api
+        working-directory: api
 
       - name: Run Tests
         run: npm test
-        working-directory: ././api
+        working-directory: api
 
       - name: Generate Coverage Report
         run: npm run coverage
-        working-directory: ././api
+        working-directory: api
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v2
