@@ -16,17 +16,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18'
 
-      - name: Install dependencies and Run Tests
+      - name: Install dependencies
+        run: npm install
         working-directory: api
-        run: |
-          npm install
-          npm test
-          npm run coverage
+
+      - name: Run Tests
+        run: npm test
+        working-directory: api
+
+      - name: Generate Coverage Report
+        run: npm run coverage
+        working-directory: api
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v2
