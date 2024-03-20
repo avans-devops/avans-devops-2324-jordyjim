@@ -14,7 +14,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2 
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -22,14 +22,22 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
-        working-directory: api
+        run: |
+          cd api
+          npm install
 
       - name: Run Tests
-        run: npm test
-        working-directory: api
+        run: |
+          cd api
+          npm test
 
-      - name: Jest coverage report
-        uses: ArtiomTr/jest-coverage-report-action@v2.3.0
+      - name: Generate Coverage Report
+        run: |
+          cd api
+          npm run coverage
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v2
         with:
-          files: './api/coverage/**/lcov.info'
+          name: coverage-report
+          path: api/coverage
