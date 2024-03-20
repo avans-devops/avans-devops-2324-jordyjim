@@ -12,30 +12,24 @@ jobs:
   test_and_coverage:
     runs-on: ubuntu-latest
     
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}/api
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run Tests
-        run: npm test
-
-      - name: Generate Coverage Report
-        run: npm run coverage
+      - name: Install dependencies and Run Tests
+        working-directory: api
+        run: |
+          npm install
+          npm test
+          npm run coverage
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: coverage
+          path: api/coverage
