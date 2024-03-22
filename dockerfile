@@ -2,11 +2,11 @@ FROM node:20.11.1
 
 WORKDIR /app
 
-ADD . .
+COPY . .
 
 RUN npm install
 
-ENV PORT=12345 MONGO_URL=mongodb://localhost:27017
+ENV PORT=3000 MONGO_URL=mongodb://mydatabase:27017
 
 EXPOSE 3000
 
