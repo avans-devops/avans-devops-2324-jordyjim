@@ -5,9 +5,9 @@ services:
     image: mongo:latest
     container_name: mydatabase
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: week4
-      MONGO_INITDB_ROOT_PASSWORD: admin123
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+    #   MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - mongo_data:/data/db
     networks:
@@ -15,12 +15,12 @@ services:
 
   myapi:
     build:
-      context: . 
+      context: .
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
-      - MONGO_URL=mongodb://week4:admin123@mydatabase:27017/week4database
+      - MONGO_URL=${MONGO_URL}/${DB_NAME}
     volumes:
       - .:/app
     networks:
