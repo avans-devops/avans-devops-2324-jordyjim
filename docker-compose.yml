@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mydatabase:
+    image: mongo:latest
+    container_name: mydatabase
+    restart: always
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+    #   MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - week4network
+
+  myapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=${MONGO_URL}/${DB_NAME}
+    volumes:
+      - .:/app
+    networks:
+      - week4network
+    container_name: myapi
+    depends_on:
+      - mydatabase
+
+# Define named volumes
+volumes:
+  mongo_data:
+
+# Define custom network
+networks:
+  week4network:
+    driver: bridge
